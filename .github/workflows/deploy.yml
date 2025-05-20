@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       # If you're using pnpm, add this step then change the commands and cache key below to use `pnpm`
       # - name: Install pnpm
@@ -18,13 +18,15 @@ jobs:
       #     version: 8
 
       - name: Install Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: npm
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install actions
+        run: |
+          npm ci
+          npm i -g @actions/artifact
 
       - name: Build
         env:
@@ -34,7 +36,7 @@ jobs:
           touch build/.nojekyll
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v2  # Updated to v2
+        uses: actions/upload-pages-artifact@v1
         with:
           # this should match the `pages` option in your adapter-static options
           path: 'build/'
@@ -54,4 +56,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2  # Updated to v2
+        uses: actions/deploy-pages@v1
