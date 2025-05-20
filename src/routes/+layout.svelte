@@ -8,6 +8,7 @@
 	import Menu from '@lucide/svelte/icons/menu';
 
 	let { children } = $props();
+  export const prerender = true;
 </script>
 
 
